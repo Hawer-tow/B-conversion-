@@ -1,0 +1,211 @@
+// activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:textAlignment="center">
+
+    <TextView
+        android:id="@+id/textone"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="Number System Conversion"
+        android:textAlignment="center"
+        android:textColor="#A3B3B1"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/dynamictxt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="7dp"
+        android:background="#10FFFFFF"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:text="Solution Pad"
+        android:textAlignment="center"
+        android:textColor="#FBC02D"
+        android:textSize="24sp" />
+
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="376dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="7dp"
+            android:text="Binary to Decimal"
+            android:textAlignment="center" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="7dp"
+            android:text="Decimal to Binary"
+            android:textAlignment="center" />
+
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="7dp"
+            android:text="Octal to Decimal"
+            android:textAlignment="center" />
+
+        <RadioButton
+            android:id="@+id/radioButton4"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="7dp"
+            android:text="Decimal to Octal"
+            android:textAlignment="center" />
+
+        <RadioButton
+            android:id="@+id/radioButton5"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="7dp"
+            android:text="Octal to Binary"
+            android:textAlignment="center" />
+
+        <RadioButton
+            android:id="@+id/radioButton6"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="7dp"
+            android:text="Binary to octal"
+            android:textAlignment="center" />
+
+        <RadioButton
+            android:id="@+id/radioButton7"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="7dp"
+            android:text="Hexadecimal to Decimal"
+            android:textAlignment="center" />
+
+        <RadioButton
+            android:id="@+id/radioButton8"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="7dp"
+            android:text="Decimal to Hexadecimal"
+            android:textAlignment="center" />
+
+        <RadioButton
+            android:id="@+id/radioButton9"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="7dp"
+            android:text="Hexadecimal to Binary"
+            android:textAlignment="center" />
+
+        <RadioButton
+            android:id="@+id/radioButton10"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="7dp"
+            android:text="Binary to Hexadecimal"
+            android:textAlignment="center" />
+
+        <RadioButton
+            android:id="@+id/radioButton11"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="7dp"
+            android:text="Hexadecimal to Octal"
+            android:textAlignment="center" />
+
+        <RadioButton
+            android:id="@+id/radioButton12"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="7dp"
+            android:text="Octal to Hexadecimal"
+            android:textAlignment="center" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/texttwo"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginBottom="10dp"
+        android:background="#10FFFFFF"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:text="Key The Number To Convert Below"
+        android:textAlignment="center"
+        android:textColor="#A3B3B1"
+        android:textSize="24sp" />
+
+
+    <EditText
+        android:id="@+id/input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        android:hint="Input"
+        android:textAlignment="center"
+        android:textStyle="italic" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text="Execute"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="Cancel"
+            android:textAlignment="center" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center"
+        android:text="Click cancel to clear Cache."
+        android:textAlignment="center"
+        android:textColor="#BA1414"
+        android:textSize="12sp" />
+
+
+</LinearLayout>
+
+
+
+
