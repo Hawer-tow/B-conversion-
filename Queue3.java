@@ -1,3 +1,5 @@
+package com.example.myconversions;
+
 public class Queue3 {
     private int[] items;
     private int front, rear, size;
@@ -25,7 +27,7 @@ public class Queue3 {
         rear = (rear + 1) % items.length;
         items[rear] = value;
         size++;
-      //  System.out.println("Successfull entry to the queue");
+        //  System.out.println("Successfull entry to the queue");
     }
 
     public int dequeue() {
@@ -48,17 +50,24 @@ public class Queue3 {
     }
 
     public void display() {
-        if (isEmpty()) {
+      /*  if (isEmpty()) {
             System.out.println("Queue is empty");
             return;
+        }*/
+
+        if (size == 0)
+        {
+
         }
-       
-        for (int i = 0; i < size; i++) {
-            int index = (front + i) % items.length;
-                      
-              System.out.print(items[index]);  
-            
-      
+
+        else {
+            for (int i = 0; i < size; i++) {
+                int index = (front + i) % items.length;
+
+                System.out.print(items[index]);
+
+
+            }
         }
         //System.out.println();
     }
