@@ -1,3 +1,5 @@
+package com.example.myconversions;
+
 public class Queue2 {
     private int[] items;
     private int front, rear, size;
@@ -25,7 +27,7 @@ public class Queue2 {
         rear = (rear + 1) % items.length;
         items[rear] = value;
         size++;
-      //  System.out.println("Successfull entry to the queue");
+        //  System.out.println("Successfull entry to the queue");
     }
 
     public int dequeue() {
@@ -53,7 +55,7 @@ public class Queue2 {
             System.out.println(0);
             return;
         }
-       
+
         for (int i = 0; i < size; i++) {
             int index = (front + i) % items.length;
             if(items[index] == 10)
@@ -80,11 +82,11 @@ public class Queue2 {
             {
                 System.out.print("F");
             }
-            else 
+            else
             {
-              System.out.print(items[index]);  
+                System.out.print(items[index]);
             }
-      
+
         }
         //System.out.println();
     }
