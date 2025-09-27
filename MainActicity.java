@@ -1,18 +1,12 @@
-// MainActicity.java
-
 package com.example.myconversions;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.navigation.ui.AppBarConfiguration;
-
-import com.example.myconversions.databinding.ActivityMainBinding;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-
+import java.util.ArrayList;
 
 
 import android.widget.RadioGroup;
@@ -24,30 +18,11 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity  {
 
-    /*
-    Button bone;
-    Button btwo;
     TextView top;
-    RadioButton rone;
-    RadioButton rtwo;
-    RadioButton rthree;
-    RadioButton rfour;
-    RadioButton rfive;
-    RadioButton rsix;
-    RadioButton rseven;
-    RadioButton reight;
-    RadioButton rnine;
-    RadioButton rten;
-    RadioButton releven;
-    RadioButton rtwelve;
-
-     */
-
-    TextView top;
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
     private RadioGroup radioGroup;
     private Button submitButton;
+    EditText inputText;
+    Button cancelButton;
 
 
     @Override
@@ -56,40 +31,20 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
 
 
-
-
-/*
-     rone = (RadioButton) findViewById(R.id.radioButton);
-        rtwo = (RadioButton) findViewById(R.id.radioButton2);
-        rthree = (RadioButton) findViewById(R.id.radioButton3);
-        rfour = (RadioButton) findViewById(R.id.radioButton4);
-        rfive = (RadioButton) findViewById(R.id.radioButton5);
-        rsix = (RadioButton) findViewById(R.id.radioButton6);
-        rseven = (RadioButton) findViewById(R.id.radioButton7);
-        reight= (RadioButton) findViewById(R.id.radioButton8);
-        rnine = (RadioButton) findViewById(R.id.radioButton9);
-        rten = (RadioButton) findViewById(R.id.radioButton10);
-        releven = (RadioButton) findViewById(R.id.radioButton11);
-        rtwelve = (RadioButton) findViewById(R.id.radioButton12);
-
-          bone = (Button) findViewById(R.id.button);
-        btwo = (Button) findViewById(R.id.button2);
-
-        top = (TextView) findViewById(R.id.dynamictxt);
- */
-
-
-        top = (TextView) findViewById(R.id.dynamictxt);
-        EditText inputText = findViewById(R.id.input);
+        top = findViewById(R.id.dynamictxt);
+        inputText = findViewById(R.id.input);
         radioGroup = findViewById(R.id.radioGroup);
         submitButton = findViewById(R.id.button);
-        Button cancelButton = findViewById(R.id.cancel);
+        cancelButton = findViewById(R.id.cancel);
 
-        boolean isReadyToExecute = true;
+
 
         cancelButton.setOnClickListener(v -> {
             inputText.setText("");      // Clear input field
-            top.setText("");   // Clear TextView
+            String cancelledtop ="Solution Pad";
+            top.setText(cancelledtop);
+
+            //boolean isReadyToExecute = true;
 
             Toast.makeText(this, "Reset complete. Ready for new input.", Toast.LENGTH_SHORT).show();
 
@@ -100,324 +55,472 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
-        submitButton.setOnClickListener(w -> {
+
+
+
+
+
+
+        submitButton.setOnClickListener(v -> {
+
+
+
+
 
             try {
-                String userInput = inputText.getText().toString().trim();
-                // Convert to double
-                double doubleinput = Double.parseDouble(userInput);
-                // Convert to float
-                float floatinput = Float.parseFloat(userInput);
+
+                String Input = inputText.getText().toString().trim().toUpperCase();
 
 
-                submitButton.setOnClickListener(v -> {
-                    int selectedId = radioGroup.getCheckedRadioButtonId();
+                if (
+                        !Input.matches("[0-9A-F.]+") ||
+                                Input.contains("..") ||
+                                Input.startsWith(".") ||
+                                Input.endsWith(".") ) {
 
-                    if (selectedId != -1) {
-                        RadioButton selectedRadioButton = findViewById(selectedId);
-                        String selectedText = selectedRadioButton.getText().toString();
+                    throw new IllegalArgumentException("Invalid input");
+                }
+                String[] fparts = Input.split("\\.");
+                for(String part : fparts)
+                {
+                    if (!part.matches("[0-9A-F]+"))
+                    {
+                        throw new IllegalArgumentException("Invalid Input");
+                    }
+                }
 
-                        Toast.makeText(MainActivity.this,
-                                "Selected: " + selectedText,
-                                Toast.LENGTH_SHORT).show();
-
-                        // You can also add custom logic here based on the selected option
-                        if (selectedId == R.id.radioButton) {
-                            float binary = floatinput;
-                            int ifloat = (int) binary;
-
-
-                            double inter = B2D.dinteger(ifloat);
-                            double fracter = B2D.dfraction(binary);
+                String userInput = inputText.getText().toString().trim().toUpperCase();
 
 
-                            double solution = inter + fracter;
-                            String solution2 = String.valueOf(solution);
 
-                            System.out.println("The Decimal equivalent of " + binary + " is : ");
-                            //System.out.println(solution);
-                            top.setText(solution2);
+                int intpart = 0;
+                float floatinput =0 ;
+                double doubleinput = 0;
 
-                        } else if (selectedId == R.id.radioButton2) {
-                            double decimal = doubleinput;
-                            double integerPart = Math.floor(decimal);
-                            double fractionalPart = decimal - integerPart;
+                if (!Input.matches(".*[A-Fa-f].*")) {
 
-                            D2B_by2.divide((int) integerPart);
-                            D2B_by2.mupltiply(fractionalPart);
+                    intpart = Integer.parseInt(userInput.split("\\.")[0]);
+                    String[] ffparts = Input.split("\\.");
+                    if (ffparts.length > 1 && !ffparts[1].isEmpty()) {
+                        String frac = ffparts[1];
+                        double fracval = Double.parseDouble(frac);
+                        doubleinput = fracval / Math.pow(10, frac.length());
+                        floatinput = (float) doubleinput;
+                    } else {
+                        floatinput = 0;
+                        doubleinput = 0;
+                    }
+                }
+                else
+                {
+                    intpart = 0;
+                    String[] ffparts = Input.split("\\.");
+                    if (ffparts.length > 1 && !ffparts[1].isEmpty()) {
+                        floatinput = 0;
+                        doubleinput = 0;
+                    } else {
+                        floatinput = 0;
+                        doubleinput = 0;
+                    }
+                }
 
-                            System.out.println("The Binary equivalent of " + decimal + " is :");
+
+
+
+                int selectedId = radioGroup.getCheckedRadioButtonId();
+
+                if (selectedId != -1) {
+                    RadioButton selectedRadioButton = findViewById(selectedId);
+                    String selectedText = selectedRadioButton.getText().toString();
+
+                    Toast.makeText(MainActivity.this,
+                            "Selected: " + selectedText,
+                            Toast.LENGTH_SHORT).show();
+
+                    // You can also add custom logic here based on the selected option
+                    if (selectedId == R.id.radioButton) {
+                        //float binary = floatinput;
+                        //int ifloat = (int) floatinput;
+
+
+                        double inter = (double)  B2D.dinteger(intpart) ;
+                        double fracter = (double)  B2D.dfraction(floatinput);
+
+
+                        double solution = inter + fracter;
+                        String solution2 = String.valueOf(solution);
+
+
+                        top.setText(solution2);
+
+                    } else if (selectedId == R.id.radioButton2) {
+                        //double decimal = doubleinput;
+                        //double integerPart = Math.floor(doubleinput);(int) integerPart
+                        //double fractionalPart = doubleinput - integerPart;
+
+                        Stack mystack = new Stack(32);
+                        Queue myqueue = new Queue(20);
+
+                        if (!Input.matches(".*[A-Fa-f].*")) {
+
+                            D2B_by2.divide(intpart, mystack);
+                            D2B_by2.mupltiply(doubleinput, myqueue);
+
+                            //System.out.println("The Binary equivalent of " + decimal + " is :");
 
 
                             //dynamictxt
-                            TextView textView = findViewById(R.id.dynamictxt);
+                            //TextView textView = findViewById(R.id.dynamictxt);
                             // Step 1: Redirect System.out
                             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                             PrintStream printStream = new PrintStream(outputStream);
                             System.setOut(printStream);
                             // Step 2: Call both methods
-                            D2B_by2.printstack((int) integerPart);
-                            D2B_by2.printqueue(fractionalPart);
+                            D2B_by2.printstack(intpart, mystack);
+                            D2B_by2.printqueue(doubleinput, myqueue);
                             // Step 3: Get combined output
                             String combinedOutput = outputStream.toString();
                             // Step 4: Display in TextView
-                            textView.setText(combinedOutput);
-
-
-                        } else if (selectedId == R.id.radioButton3) {
-
-                            float octal = floatinput;
-                            int ifloat = (int) octal;
-
-//int beforeDecimal = parts[0].length();      // Digits before decimal
-//int afterDecimal = parts[1].length();  // digits after the decimal
-
-                            double inter = O2D.dinteger(ifloat);
-                            double fracter = O2D.dfraction(octal);
-                            double solution = inter + fracter;
-
-                            System.out.println("The Decimal equivalent of " + octal + " is : ");
-                            System.out.println(solution);
-
-                            String solution2 = String.valueOf(solution);
-
-                            top.setText(solution2);
-                        } else if (selectedId == R.id.radioButton4) {
-                            double decimal = doubleinput;
-                            double integerPart = Math.floor(decimal);
-                            double fractionalPart = decimal - integerPart;
-
-                            D2O_by8.divide((int) integerPart);
-                            D2O_by8.mupltiply(fractionalPart);
-
-                            System.out.println("The Octal equivalent of " + decimal + " is :");
-
-
-                            TextView textView = findViewById(R.id.dynamictxt);
-                            // Step 1: Redirect System.out
-                            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                            PrintStream printStream = new PrintStream(outputStream);
-                            System.setOut(printStream);
-                            // Step 2: Call both methods
-                            D2O_by8.printstack((int) integerPart);
-                            D2O_by8.printqueue(fractionalPart);
-                            // Step 3: Get combined output
-                            String combinedOutput = outputStream.toString();
-                            // Step 4: Display in TextView
-                            textView.setText(combinedOutput);
-                        } else if (selectedId == R.id.radioButton5) {
-
-                            //ArrayList<String> fracChunks = new ArrayList<>();
-
-                            String octal = userInput;
-                            String[] parts = octal.split("\\.");
-
-                            String intPart = parts[0];       // "10111"
-                            String fracPart = parts[1];
-
-
-                            System.out.println("The Binary equivalent of " + octal + " is : ");
-                            String str = (O2B.inthex(parts[0]) + "." + O2B.frachex(parts[1]));
-                            System.out.println(str);
-
-                            //String solution2 = String.valueOf(solution);
-                            top.setText(str);
-                        } else if (selectedId == R.id.radioButton6) {
-                            //ArrayList<String> fracChunks = new ArrayList<>();
-
-                            String binary = userInput;
-                            String[] parts = binary.split("\\.");
-
-                            String intPart = parts[0];       // "10111"
-                            String fracPart = parts[1];
-
-                            B2O.groupings(parts[0]);
-                            B2O.fracgroupings(parts[1]);
-
-                            System.out.println("The Octal equivalent of " + binary + " is : ");
-                            B2O.printhex(parts[0]);
-                            System.out.print(".");
-                            B2O.printfrachex(parts[1]);
-
-                            TextView textView = findViewById(R.id.dynamictxt);
-                            // Step 1: Redirect System.out
-                            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                            PrintStream printStream = new PrintStream(outputStream);
-                            System.setOut(printStream);
-                            // Step 2: Call both methods
-                            B2O.printhex(parts[0]);
-                            System.out.print(".");
-                            B2O.printfrachex(parts[1]);
-                            // Step 3: Get combined output
-                            String combinedOutput = outputStream.toString();
-                            // Step 4: Display in TextView
-                            textView.setText(combinedOutput);
-
-                        } else if (selectedId == R.id.radioButton7) {
-                            String hex = userInput;
-                            String[] parts = hex.split("\\.");
-
-                            String intPart = parts[0];       // "10111"
-                            String fracPart = parts[1];
-                            double finalsum;
-
-
-                            System.out.println("The Decimal equivalent of " + hex + " is : ");
-
-
-                            finalsum = (Hex2D.inthex(parts[0]) + Hex2D.frachex(parts[1]));
-                            System.out.println(finalsum);
-
-                            String solution = String.valueOf(finalsum);
-                            top.setText(solution);
-                        } else if (selectedId == R.id.radioButton8) {
-                            double decimal = doubleinput;
-
-                            double integerPart = Math.floor(decimal);
-                            double fractionalPart = decimal - integerPart;
-
-                            D2Hex.divide((int) integerPart);
-                            D2Hex.mupltiply(fractionalPart);
-
-                            System.out.println("The Hexadecimal equivalent of " + decimal + " is : \n");
-                            D2Hex.printstack((int) integerPart);
-                            System.out.print(".");
-                            D2Hex.printqueue(fractionalPart);
-
-                            TextView textView = findViewById(R.id.dynamictxt);
-                            // Step 1: Redirect System.out
-                            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                            PrintStream printStream = new PrintStream(outputStream);
-                            System.setOut(printStream);
-                            // Step 2: Call both methods
-                            D2Hex.printstack((int) integerPart);
-                            System.out.print(".");
-                            D2Hex.printqueue(fractionalPart);
-                            // Step 3: Get combined output
-                            String combinedOutput = outputStream.toString();
-                            // Step 4: Display in TextView
-                            textView.setText(combinedOutput);
-                        } else if (selectedId == R.id.radioButton9) {
-                            String hex = userInput;
-                            String[] parts = hex.split("\\.");
-
-                            String intPart = parts[0];       // "10111"
-                            String fracPart = parts[1];
-
-
-                            System.out.println("The Binary equivalent of " + hex + " is : ");
-
-
-                            String str = (Hex2B.inthex(parts[0]) + "." + Hex2B.frachex(parts[1]));
-                            System.out.println(str);
-
-                            //String solution = String.valueOf(finalsum);
-                            top.setText(str);
-                        } else if (selectedId == R.id.radioButton10) {
-                            String binary = userInput;
-                            String[] parts = binary.split("\\.");
-
-                            String intPart = parts[0];       // "10111"
-                            String fracPart = parts[1];
-
-                            B2Hex.groupings(parts[0]);
-                            B2Hex.fracgroupings(parts[1]);
-
-                            System.out.println("The Hexadecimal equivalent of " + binary + " is : ");
-                            B2Hex.printhex(parts[0]);
-                            System.out.print(".");
-                            B2Hex.printfrachex(parts[1]);
-
-                            TextView textView = findViewById(R.id.dynamictxt);
-                            // Step 1: Redirect System.out
-                            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                            PrintStream printStream = new PrintStream(outputStream);
-                            System.setOut(printStream);
-                            // Step 2: Call both methods
-                            B2Hex.printhex(parts[0]);
-                            System.out.print(".");
-                            B2Hex.printfrachex(parts[1]);
-                            // Step 3: Get combined output
-                            String combinedOutput = outputStream.toString();
-                            // Step 4: Display in TextView
-                            textView.setText(combinedOutput);
-                        } else if (selectedId == R.id.radioButton11) {
-                            String hex = userInput;
-                            String[] parts = hex.split("\\.");
-
-                            String intPart = parts[0];       // "10111"
-                            String fracPart = parts[1];
-
-                            Hex2O.inthex(intPart);
-                            Hex2O.frachex(fracPart);
-
-                            System.out.println("The Octal equivalent of " + hex + " is : \n");
-
-
-                            TextView textView = findViewById(R.id.dynamictxt);
-                            // Step 1: Redirect System.out
-                            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                            PrintStream printStream = new PrintStream(outputStream);
-                            System.setOut(printStream);
-                            // Step 2: Call both methods
-                            Hex2O.binary2octal.printhex(hex);
-                            System.out.print(".");
-                            Hex2O.binary2octal.printfrachex(hex);
-                            // Step 3: Get combined output
-                            String combinedOutput = outputStream.toString();
-                            // Step 4: Display in TextView
-                            textView.setText(combinedOutput);
-                        } else if (selectedId == R.id.radioButton12) {
-                            String octal = userInput;
-                            String[] parts = octal.split("\\.");
-
-                            String intPart = parts[0];       // "10111"
-                            String fracPart = parts[1];
-
-                            O2Hex.inthex(parts[0]);
-                            O2Hex.frachex(parts[1]);
-
-                            System.out.println("The Hexadecimal equivalent of " + octal + " is : ");
-
-
-                            TextView textView = findViewById(R.id.dynamictxt);
-                            // Step 1: Redirect System.out
-                            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                            PrintStream printStream = new PrintStream(outputStream);
-                            System.setOut(printStream);
-                            // Step 2: Call both methods
-                            O2Hex.binary2hex.printhex(parts[0]);
-                            System.out.print(".");
-                            O2Hex.binary2hex.printfrachex(parts[1]);
-                            // Step 3: Get combined output
-                            String combinedOutput = outputStream.toString();
-                            // Step 4: Display in TextView
-                            textView.setText(combinedOutput);
+                            top.setText(combinedOutput);
+                        }
+                        else
+                        {
+                            top.setText("0.0");
                         }
 
-                    } else {
-                        Toast.makeText(MainActivity.this,
-                                "Please select an option",
-                                Toast.LENGTH_SHORT).show();
+
+                    } else if (selectedId == R.id.radioButton3) {
+
+                        // float octal = floatinput;
+                        //int ifloat = (int) floatinput;
+
+
+                        double inter = O2D.dinteger(intpart);
+                        double fracter = O2D.dfraction(floatinput);
+                        double solution = inter + fracter;
+
+                        //System.out.println("The Decimal equivalent of " + octal + " is : ");
+                        System.out.println(solution);
+
+                        String solution2 = String.valueOf(solution);
+
+                        top.setText(solution2);
+
+
+                    } else if (selectedId == R.id.radioButton4) {
+                        //double decimal = doubleinput;
+                        //double integerPart = Math.floor(doubleinput);(int) integerPart
+                        //double fractionalPart = doubleinput - integerPart;
+
+                        Stack mystack = new Stack(32);
+                        Queue myqueue = new Queue(20);
+
+                        if (!Input.matches(".*[A-Fa-f].*")) {
+                            D2O_by8.divide(intpart, mystack);
+                            D2O_by8.mupltiply(doubleinput, myqueue);
+
+                            //System.out.println("The  Octal equivalent of " + decimal + " is :");
+
+                            //TextView textView = findViewById(R.id.dynamictxt);
+                            // Step 1: Redirect System.out
+                            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                            PrintStream printStream = new PrintStream(outputStream);
+                            System.setOut(printStream);
+                            // Step 2: Call both methods
+                            D2O_by8.printstack(intpart, mystack);
+                            D2O_by8.printqueue(doubleinput, myqueue);
+                            // Step 3: Get combined output
+                            String combinedOutput = outputStream.toString();
+                            // Step 4: Display in TextView
+                            top.setText(combinedOutput);
+                        }
+                        else
+                        {
+                            top.setText("0.0");
+                        }
+
+
+                    } else if (selectedId == R.id.radioButton5) {
+
+                        ArrayList<String> groups = new ArrayList<>();
+                        ArrayList<String> chunks = new ArrayList<>();
+
+                        //String octal = userInput;
+                        if (!Input.matches(".*[A-Fa-f].*")) {
+                            String[] parts = userInput.split("\\.", 2);
+
+                            String beforedecimal = parts.length > 0 ? parts[0] : "";
+                            String afterdecimal = parts.length > 1 ? parts[1] : "";
+
+
+                            //System.out.println("The Binary equivalent of " + octal + " is : ");
+                            String str = (O2B.inthex(beforedecimal, groups) + "." + O2B.frachex(afterdecimal, chunks));
+
+                            top.setText(str);
+                        }
+                        else
+                        {
+                            top.setText("0.0");
+                        }
+
+
+                    } else if (selectedId == R.id.radioButton6) {
+
+                        ArrayList<String> chunks = new ArrayList<>();
+                        ArrayList<String> groups = new ArrayList<>();
+                        Queue3 myqueue1 = new Queue3(20);
+                        Queue3 myqueue2 = new Queue3(20);
+
+                        //String binary = userInput;
+                        if (!Input.matches(".*[A-Fa-f].*")) {
+                            String[] parts = userInput.split("\\.", 2);
+
+                            String beforedecimal = parts.length > 0 ? parts[0] : "";
+                            String afterdecimal = parts.length > 1 ? parts[1] : "";
+
+
+                            B2O.groupings(beforedecimal, groups, myqueue1);
+                            B2O.fracgroupings(afterdecimal, chunks, myqueue2);
+
+                            // System.out.println("The Octal equivalent of " + binary + " is : ");
+
+
+                            //TextView textView = findViewById(R.id.dynamictxt);
+                            // Step 1: Redirect System.out
+                            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                            PrintStream printStream = new PrintStream(outputStream);
+                            System.setOut(printStream);
+                            // Step 2: Call both methods
+                            B2O.printhex(beforedecimal, myqueue1);
+                            System.out.print(".");
+                            B2O.printfrachex(afterdecimal, myqueue2);
+                            // Step 3: Get combined output
+                            String combinedOutput = outputStream.toString();
+                            // Step 4: Display in TextView
+                            top.setText(combinedOutput);
+                        }
+                        else
+                        {
+
+                            top.setText("0.0");
+                        }
+
+                    } else if (selectedId == R.id.radioButton7) {
+
+                        ArrayList<String> chunks = new ArrayList<>();
+                        ArrayList<String> groups = new ArrayList<>();
+                        //String hex = userInput;
+                        String[] parts = userInput.split("\\.", 2);
+
+                        String beforedecimal = parts.length > 0 ? parts[0] : "";
+                        String afterdecimal = parts.length > 1 ? parts[1] : "";
+
+
+                        double finalsum;
+
+
+                        //System.out.println("The Decimal equivalent of " + hex + " is : ");
+
+
+                        finalsum = (Hex2D.inthex(beforedecimal, groups) + Hex2D.frachex(afterdecimal, chunks));
+                        //System.out.println(finalsum);
+
+                        String solution = String.valueOf(finalsum);
+                        top.setText(solution);
+                    } else if (selectedId == R.id.radioButton8) {
+
+                        Stack mystack = new Stack(30);
+                        Queue2 myqueue = new Queue2(20);
+                        //double decimal = doubleinput;
+
+                        //double integerPart = Math.floor(doubleinput);(int) integerPart
+                        //double fractionalPart = doubleinput - integerPart;
+                        if (!Input.matches(".*[A-Fa-f].*")) {
+
+                            D2Hex.divide(intpart, mystack);
+                            D2Hex.mupltiply(doubleinput, myqueue);
+
+                            //System.out.println("The Hexadecimal equivalent of " + decimal + " is : \n");
+
+
+                            //TextView textView = findViewById(R.id.dynamictxt);
+                            // Step 1: Redirect System.out
+                            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                            PrintStream printStream = new PrintStream(outputStream);
+                            System.setOut(printStream);
+                            // Step 2: Call both methods
+                            D2Hex.printstack(intpart, mystack);
+                            System.out.print(".");
+                            D2Hex.printqueue(doubleinput, myqueue);
+                            // Step 3: Get combined output
+                            String combinedOutput = outputStream.toString();
+                            // Step 4: Display in TextView
+                            top.setText(combinedOutput);
+                        }
+                        else
+                        {
+                            top.setText("0.0");
+                        }
+                    } else if (selectedId == R.id.radioButton9) {
+
+                        ArrayList<String> chunks = new ArrayList<>();
+                        ArrayList<String> groups = new ArrayList<>();
+                        //String hex = userInput;
+                        String[] parts = userInput.split("\\.", 2);
+
+                        String beforedecimal = parts.length > 0 ? parts[0] : "";
+                        String afterdecimal = parts.length > 1 ? parts[1] : "";
+
+
+                        //System.out.println("The Binary equivalent of " + hex + " is : ");
+
+
+                        String str = (Hex2B.inthex(beforedecimal, groups) + "." + Hex2B.frachex(afterdecimal, chunks));
+
+
+                        //String solution = String.valueOf(finalsum);
+                        top.setText(str);
+                    } else if (selectedId == R.id.radioButton10) {
+
+                        ArrayList<String> chunks = new ArrayList<>();
+                        ArrayList<String> groups = new ArrayList<>();
+                        Queue2 myqueue1 = new Queue2(20);
+                        Queue2 myqueue2 = new Queue2(20);
+                        // String binary = userInput;
+                        if (!Input.matches(".*[A-Fa-f].*")) {
+                            String[] parts = userInput.split("\\.", 2);
+
+                            String beforedecimal = parts.length > 0 ? parts[0] : "";
+                            String afterdecimal = parts.length > 1 ? parts[1] : "";
+
+
+                            B2Hex.groupings(beforedecimal, groups, myqueue1);
+                            B2Hex.fracgroupings(afterdecimal, chunks, myqueue2);
+
+                            //System.out.println("The Hexadecimal equivalent of " + binary + " is : ");
+
+
+                            //TextView textView = findViewById(R.id.dynamictxt);
+                            // Step 1: Redirect System.out
+                            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                            PrintStream printStream = new PrintStream(outputStream);
+                            System.setOut(printStream);
+                            // Step 2: Call both methods
+                            B2Hex.printhex(beforedecimal, myqueue1);
+                            System.out.print(".");
+                            B2Hex.printfrachex(afterdecimal, myqueue2);
+                            // Step 3: Get combined output
+                            String combinedOutput = outputStream.toString();
+                            // Step 4: Display in TextView
+                            top.setText(combinedOutput);
+                        }
+                        else
+                        {
+
+                            top.setText("0.0");
+                        }
+                    } else if (selectedId == R.id.radioButton11) {
+
+                        ArrayList<String> chunks = new ArrayList<>();
+                        ArrayList<String> groups = new ArrayList<>();
+                        ArrayList<String> chunks2 = new ArrayList<>();
+                        ArrayList<String> groups2 = new ArrayList<>();
+                        Queue3 myqueue1 = new Queue3(20);
+                        Queue3 myqueue2 = new Queue3(20);
+                        // String hex = userInput;
+                        String[] parts = userInput.split("\\.", 2);
+
+                        String beforedecimal = parts.length > 0 ? parts[0] : "";
+                        String afterdecimal = parts.length > 1 ? parts[1] : "";
+
+                        Hex2O.inthex(beforedecimal, groups, groups2, myqueue1);
+                        Hex2O.frachex(afterdecimal, chunks, chunks2, myqueue2);
+
+                        //System.out.println("The Octal equivalent of " + hex + " is : \n");
+
+
+                        //TextView textView = findViewById(R.id.dynamictxt);
+                        // Step 1: Redirect System.out
+                        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                        PrintStream printStream = new PrintStream(outputStream);
+                        System.setOut(printStream);
+                        // Step 2: Call both methods
+                        B2O.printhex(userInput, myqueue1);
+                        System.out.print(".");
+                        B2O.printfrachex(userInput, myqueue2);
+                        // Step 3: Get combined output
+                        String combinedOutput = outputStream.toString();
+                        // Step 4: Display in TextView
+                        top.setText(combinedOutput);
+                    } else if (selectedId == R.id.radioButton12) {
+
+                        ArrayList<String> chunks = new ArrayList<>();
+                        ArrayList<String> groups = new ArrayList<>();
+                        ArrayList<String> chunks2 = new ArrayList<>();
+                        ArrayList<String> groups2 = new ArrayList<>();
+                        Queue2 myqueue1 = new Queue2(20);
+                        Queue2 myqueue2 = new Queue2(20);
+                        // String octal = userInput;
+
+                        if (!Input.matches(".*[A-Fa-f].*")) {
+
+                            String[] parts = userInput.split("\\.", 2);
+
+                            String beforedecimal = parts.length > 0 ? parts[0] : "";
+                            String afterdecimal = parts.length > 1 ? parts[1] : "";
+
+
+                            O2Hex.inthex(beforedecimal, groups, groups2, myqueue1);
+                            O2Hex.frachex(afterdecimal, chunks, chunks2, myqueue2);
+
+                            //System.out.println("The Hexadecimal equivalent of " + octal + " is : ");
+
+
+                            //TextView textView = findViewById(R.id.dynamictxt);
+                            // Step 1: Redirect System.out
+                            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                            PrintStream printStream = new PrintStream(outputStream);
+                            System.setOut(printStream);
+                            // Step 2: Call both methods
+                            B2Hex.printhex(beforedecimal, myqueue1);
+                            System.out.print(".");
+                            B2Hex.printfrachex(afterdecimal, myqueue2);
+                            // Step 3: Get combined output
+                            String combinedOutput = outputStream.toString();
+                            // Step 4: Display in TextView
+                            top.setText(combinedOutput);
+                        }
+                        else
+                        {
+                            top.setText("0.0");
+                        }
                     }
-                });
-            }
 
-            catch (NumberFormatException e) {
+                } else {
+                    Toast.makeText(MainActivity.this,
+                            "Please select an option",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+            catch (IllegalArgumentException e) {
                 // Handle invalid input
-                Toast.makeText(this, "Please enter a valid number", Toast.LENGTH_SHORT).show();
+                Toast.makeText( getApplicationContext(), "Error "+ e.getMessage() , Toast.LENGTH_SHORT).show();
             }
-
-
         });
 
 
 
 
 
+
+
+
+
+
+
     }
-
-
 
 
 
