@@ -1,9 +1,8 @@
-// activity_main.xml
-
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#5A161615"
     android:orientation="vertical"
     android:padding="16dp"
     android:textAlignment="center">
@@ -12,6 +11,7 @@
         android:id="@+id/textone"
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="Number System Conversion"
@@ -19,13 +19,14 @@
         android:textColor="#A3B3B1"
         android:textSize="20sp" />
 
+
     <TextView
         android:id="@+id/dynamictxt"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="7dp"
-        android:background="#10FFFFFF"
+        android:background="#042554"
         android:fontFamily="sans-serif-black"
         android:gravity="center"
         android:text="Solution Pad"
@@ -33,11 +34,13 @@
         android:textColor="#FBC02D"
         android:textSize="24sp" />
 
-
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="match_parent"
-        android:layout_height="376dp"
+        android:layout_height="502dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="#012E2E"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -46,7 +49,7 @@
             android:id="@+id/radioButton"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginBottom="7dp"
+            android:layout_marginBottom="20dp"
             android:text="Binary to Decimal"
             android:textAlignment="center" />
 
@@ -54,7 +57,7 @@
             android:id="@+id/radioButton2"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginBottom="7dp"
+            android:layout_marginBottom="20dp"
             android:text="Decimal to Binary"
             android:textAlignment="center" />
 
@@ -62,7 +65,7 @@
             android:id="@+id/radioButton3"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginBottom="7dp"
+            android:layout_marginBottom="20dp"
             android:text="Octal to Decimal"
             android:textAlignment="center" />
 
@@ -70,7 +73,7 @@
             android:id="@+id/radioButton4"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginBottom="7dp"
+            android:layout_marginBottom="20dp"
             android:text="Decimal to Octal"
             android:textAlignment="center" />
 
@@ -78,7 +81,7 @@
             android:id="@+id/radioButton5"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginBottom="7dp"
+            android:layout_marginBottom="20dp"
             android:text="Octal to Binary"
             android:textAlignment="center" />
 
@@ -86,7 +89,7 @@
             android:id="@+id/radioButton6"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginBottom="7dp"
+            android:layout_marginBottom="20dp"
             android:text="Binary to octal"
             android:textAlignment="center" />
 
@@ -94,7 +97,7 @@
             android:id="@+id/radioButton7"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginBottom="7dp"
+            android:layout_marginBottom="20dp"
             android:text="Hexadecimal to Decimal"
             android:textAlignment="center" />
 
@@ -102,7 +105,7 @@
             android:id="@+id/radioButton8"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginBottom="7dp"
+            android:layout_marginBottom="20dp"
             android:text="Decimal to Hexadecimal"
             android:textAlignment="center" />
 
@@ -110,7 +113,7 @@
             android:id="@+id/radioButton9"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginBottom="7dp"
+            android:layout_marginBottom="20dp"
             android:text="Hexadecimal to Binary"
             android:textAlignment="center" />
 
@@ -118,7 +121,7 @@
             android:id="@+id/radioButton10"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginBottom="7dp"
+            android:layout_marginBottom="20dp"
             android:text="Binary to Hexadecimal"
             android:textAlignment="center" />
 
@@ -126,7 +129,7 @@
             android:id="@+id/radioButton11"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginBottom="7dp"
+            android:layout_marginBottom="20dp"
             android:text="Hexadecimal to Octal"
             android:textAlignment="center" />
 
@@ -134,7 +137,7 @@
             android:id="@+id/radioButton12"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginBottom="7dp"
+
             android:text="Octal to Hexadecimal"
             android:textAlignment="center" />
 
@@ -144,6 +147,7 @@
         android:id="@+id/texttwo"
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="10dp"
         android:background="#10FFFFFF"
         android:fontFamily="sans-serif-black"
@@ -163,11 +167,11 @@
         android:textAlignment="center"
         android:textStyle="italic" />
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="86dp"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="16dp">
@@ -190,6 +194,7 @@
             android:text="Cancel"
             android:textAlignment="center" />
 
+
     </LinearLayout>
 
     <TextView
@@ -200,7 +205,7 @@
         android:gravity="center"
         android:text="Click cancel to clear Cache."
         android:textAlignment="center"
-        android:textColor="#BA1414"
+        android:textColor="#EFEDE9E9"
         android:textSize="12sp" />
 
 
