@@ -1,15 +1,17 @@
- public class Stack {
+package com.example.myconversions;
 
-         int maxSize;
-         int[] stackArray;
-         int top;
+public class Stack {
+
+    int maxSize;
+    int[] stackArray;
+    int top;
 
 
     public  Stack(int size) {
         maxSize = size;
         stackArray = new int[maxSize];
         top = -1;
-    
+
     }
 
     public void push(int value) {
@@ -38,5 +40,6 @@
 
     }
 
-} 
+}
+
 
