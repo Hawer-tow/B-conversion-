@@ -1,95 +1,79 @@
-//This shall be used in the coversion of binary to both integers and fractions decimal numbers .
-
-// B2D
+package com.example.myconversions;
 
 public class B2D{
 
 
 
-          // first  loop
-public static int  dinteger(int ifloat){
-    int i = -1;
-     int isum = 0;
-   while (ifloat > 0) {
-
-  
-   
-    int digit = ifloat % 10;        // Get the last digit
-    
-    //System.out.print(digit + " ");  // Print it
-    ifloat /= 10; // Remove the last digit
-     i ++;
-    if (digit == 0)
-    {
-     continue;
-    }
-    else if (digit == 1)
-    {
-      double binvalue = Math.pow(2, i);
-      isum += binvalue;
-  
-    }
-    else
-    {break;}
-                     
-  } // System.out.println(isum);
-  return isum; }
+    // first  loop
+    public static int  dinteger(int ifloat){
+        int i = -1;
+        int isum = 0;
+        while (ifloat > 0) {
 
 
-     // Second for loop
 
-        // Split the number into two parts: before and after the decimal
-public static double dfraction(float number){
-        String[] parts2 = String.valueOf(number).split("\\.");
-        float dsum = 0;
-     if (parts2.length > 1) {
+            int digit = ifloat % 10;        // Get the last digit
 
-     // float dsum = 0;
-      String decimalPart = parts2[1]; // Get digits after the decimal
-      for (int j = 0; j < decimalPart.length(); j++) 
-      {
-      char digitChar = decimalPart.charAt(j);
-      int digit = Character.getNumericValue(digitChar);
-     // System.out.print(digit + " ");
-
-     if (digit == 0)
-     {
-      continue;
-     }
-     else if (digit == 1)
-     {
-      int x = (-1 * (j+1));
-      double binvalue = Math.pow(2, x);
-      dsum += binvalue;
-      }
-      else if (digit > 1)
-      {
-      break;}  
+            //System.out.print(digit + " ");  // Print it
+            ifloat /= 10; // Remove the last digit
+            i ++;
+            if (digit == 0)
+            {
+                continue;
+            }
+            else if (digit == 1)
+            {
+                double binvalue = Math.pow(2, i);
+                isum += (int)binvalue;
 
             }
-            // System.out.println(dsum); 
-            } return dsum; }      
+            else
+            {break;}
+
+        } // System.out.println(isum);
+        return isum;
+    }
 
 
-public static void main(String[] args){
- 
-;
+    // Second for loop
 
- float binary = 1011.011f;
-int ifloat = (int) binary;
+    // Split the number into two parts: before and after the decimal
+    public static double dfraction(float number){
+        String[] parts2 = String.valueOf(number).split("\\.");
+        float dsum = 0;
+        if (parts2.length > 1) {
 
-//int beforeDecimal = parts[0].length();      // Digits before decimal
-//int afterDecimal = parts[1].length();  // digits after the decimal
+            // float dsum = 0;
+            String decimalPart = parts2[1]; // Get digits after the decimal
+            for (int j = 0; j < decimalPart.length(); j++)
+            {
+                char digitChar = decimalPart.charAt(j);
+                int digit = Character.getNumericValue(digitChar);
+                // System.out.print(digit + " ");
+
+                if (digit == 0)
+                {
+                    continue;
+                }
+                else if (digit == 1)
+                {
+                    int x = (-1 * (j+1));
+                    double binvalue = Math.pow(2, x);
+                    dsum += (float) binvalue;
+                }
+                else if (digit > 1)
+                {
+                    break;}
+
+            }
+            // System.out.println(dsum);
+        } return dsum;
+    }
+
+
+    public static void main(String[] args){
 
 
 
-double inter = dinteger(ifloat);
-double fracter = dfraction(binary);
 
-
-double solution = inter + fracter;
-
-System.out.println("The Decimal equivalent of " + binary + " is : ");
-System.out.println(solution);
-
-}}
+    }}
